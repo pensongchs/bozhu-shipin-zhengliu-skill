@@ -9,11 +9,7 @@ description: 抓取、整理并蒸馏抖音、小红书、视频号、B站、You
 
 把不同来源的视频压缩成可验证、可检索、可转化的内容规律。提炼方法和需求，不复制原博主的句子、故事、身份或独特表达。
 
-固定归档根目录：
-
-```text
-/Users/spmac/Documents/自媒体专用/outputs/博主内容蒸馏/
-```
+默认把归档建立在当前工作项目的 `outputs/博主内容蒸馏/`。用户明确指定其他位置时，通过 `--root "<归档目录>"` 使用该目录。脚本通过自身位置读取 Skill 内模板，不依赖固定用户名、项目层级或操作系统路径。
 
 ## 选择输入方式
 
@@ -30,25 +26,29 @@ description: 抓取、整理并蒸馏抖音、小红书、视频号、B站、You
 
 ## 建立归档
 
-首次使用先运行：
+首次使用先让 Codex 找到当前电脑可用的 Python 3。优先使用 Codex 提供的 Python 运行时；否则使用系统中的 `python3`、`python` 或 Windows `py -3`。下面的 `<Python 3>` 代表实际可用的命令。
 
-```bash
-python3 /Users/spmac/Documents/自媒体专用/.agents/skills/blogger-video-distiller/scripts/manage_archive.py init-root
+初始化工作台：
+
+```text
+<Python 3> "<本 Skill 目录>/scripts/manage_archive.py" --root "<归档目录>" init-root
 ```
 
 新增博主时运行：
 
-```bash
-python3 /Users/spmac/Documents/自媒体专用/.agents/skills/blogger-video-distiller/scripts/manage_archive.py init-blogger --platform 抖音 --blogger-name "博主名" --profile-url "主页链接"
+```text
+<Python 3> "<本 Skill 目录>/scripts/manage_archive.py" --root "<归档目录>" init-blogger --platform 抖音 --blogger-name "博主名" --profile-url "主页链接"
 ```
 
 新增单条视频时运行：
 
-```bash
-python3 /Users/spmac/Documents/自媒体专用/.agents/skills/blogger-video-distiller/scripts/manage_archive.py add-video --platform 抖音 --blogger-name "博主名" --title "视频短标题" --url "视频链接" --published-date YYYY-MM-DD
+```text
+<Python 3> "<本 Skill 目录>/scripts/manage_archive.py" --root "<归档目录>" add-video --platform 抖音 --blogger-name "博主名" --title "视频短标题" --url "视频链接" --published-date YYYY-MM-DD
 ```
 
 脚本只补齐缺失文件，不覆盖已经填写的档案或分析。
+
+首次配置完成后，用一个临时博主名称运行 `init-blogger`，确认工作台和 Markdown 文件已经实际生成；不能只根据 Skill 文件夹存在判断可用。
 
 ## 执行流程
 

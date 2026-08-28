@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 from datetime import date
 from pathlib import Path
@@ -11,8 +12,7 @@ from pathlib import Path
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 ASSETS = SKILL_ROOT / "assets"
-PROJECT_ROOT = Path(__file__).resolve().parents[4]
-DEFAULT_ROOT = PROJECT_ROOT / "outputs" / "博主内容蒸馏"
+DEFAULT_ROOT = Path(os.environ.get("BLOGGER_DISTILLER_ROOT", Path.cwd() / "outputs" / "博主内容蒸馏"))
 
 
 def safe_name(value: str) -> str:
@@ -153,7 +153,7 @@ def main() -> None:
     video_parser.add_argument("--published-date", default="")
 
     args = parser.parse_args()
-    root = args.root.resolve()
+    root = args.root.expanduser().resolve()
     if args.command == "init-root":
         created = init_root(root)
         print(f"工作台：{root}")
