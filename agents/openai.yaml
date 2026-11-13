@@ -1,4 +1,4 @@
 interface:
   display_name: "博主视频蒸馏"
-  short_description: "抓取并拆解不同博主的视频核心，沉淀内容规律与原创选题"
-  default_prompt: "使用 $blogger-video-distiller 抓取并蒸馏这个博主的视频核心，整理到项目博主库。"
+  short_description: "蒸馏单个博主，交付报告、复刻指令与一期口播加分镜方案"
+  default_prompt: "使用 $blogger-video-distiller 蒸馏这个博主，产出可复刻的报告与指令。"
