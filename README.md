@@ -12,40 +12,35 @@
 
 ## 安装
 
-1. 复制整个文件夹到你的技能目录：
+把解压后的 `blogger-video-distiller` 文件夹放到 AI 工具的技能目录，确保文件夹里直接是 `SKILL.md`。
 
-| 工具 | 技能目录 |
+| 工具 | 技能位置 |
 |---|---|
-| Codex | ~/.codex/skills/blogger-video-distiller |
-| DeepSeek Harness | ~/.agents/skills/blogger-video-distiller |
-| Claude Code | ~/.claude/skills/blogger-video-distiller |
+| Codex | 用户目录下的 `.agents/skills/blogger-video-distiller`。Windows 也可放在当前工作项目的 `.agents/skills/blogger-video-distiller` |
+| DeepSeek Harness | 用户目录下的 `.agents/skills/blogger-video-distiller` |
+| Claude Code | 用户目录下的 `.claude/skills/blogger-video-distiller` |
 
-2. 需要 Python 3.9+（macOS 自带；Windows 装 python.org 版本，命令用 py 代替 python3）。不需要安装任何第三方包。
+使用浏览器采集前，确认当前 AI 会话已启用能操作播放器、看到正片画面，并且用户也能接管的浏览器或电脑控制。渲染和校验报告需要 Python 3.9+，仅用标准库。Windows 可在 PowerShell 运行 `py -3 --version` 检查；如果使用的是已配置的 `python`，把以下 `py -3` 换成 `python`。macOS 或 Linux 使用 `python3`。
 
-3. 配置归档位置：
-
-```bash
-cp config.example.json config.json
-```
-
-编辑 config.json，把 archive_root 改成你想放蒸馏结果的位置。不配置时默认在当前目录建「博主内容蒸馏」。
+需要指定归档位置时，将 `config.example.json` 另存为 `config.json`，修改其中的 `archive_root`。Windows 的 JSON 路径可写成 `D:/博主内容蒸馏`。默认归档在当前工作目录的「博主内容蒸馏」。
 
 ## 快速开始
 
-在 Skill 目录下执行：
+在 AI 里调用：
 
-```bash
-python3 scripts/manage_archive.py init --platform 抖音 --blogger-name "博主名" --profile-url "主页链接"
+> 用 $blogger-video-distiller 蒸馏这个抖音账号：【主页链接或抖音号】。用浏览器打开一条公开视频试播。如果需要登录，请把浏览器交给我用非主账号扫码。能看到正片后开始抽样。
+
+登录时只在抖音网页和手机 App 操作。完成后把控制交回 AI。出现访问频繁或账号异常提示时暂停浏览。详细步骤及画面、口播的核对标准见 [跨工具与抖音访问流程](references/portability.md)。
+
+AI 可在 Skill 目录调用脚本建档、渲染和校验。Windows PowerShell 命令：
+
+```powershell
+py -3 scripts/manage_archive.py init --platform 抖音 --blogger-name "博主名" --profile-url "主页链接"
+py -3 scripts/manage_archive.py render --blogger "博主名"
+py -3 scripts/manage_archive.py check --blogger "博主名"
 ```
 
-然后让 AI 按 SKILL.md 的流程填完 5 个板块，再执行：
-
-```bash
-python3 scripts/manage_archive.py render --blogger 博主名
-python3 scripts/manage_archive.py check --blogger 博主名
-```
-
-check 全 OK 后，打开 蒸馏报告.html，把 复刻指令.md 和 总蒸馏指令.md 交给任意 AI 使用。
+等 5 个板块填完再执行 `render` 和 `check`。校验通过后打开「蒸馏报告.html」，把「复刻指令.md」和「总蒸馏指令.md」交给 AI 使用。
 
 ## 产物
 
@@ -60,7 +55,7 @@ check 全 OK 后，打开 蒸馏报告.html，把 复刻指令.md 和 总蒸馏�
 
 ## 没有电脑控制能力怎么办
 
-照样能用，走素材包模式：让用户上传主页截图、Top10 每期 3 帧画面、3—5 条逐字稿，然后按板块把指令贴进对话框。详见 references/portability.md。
+可上传主页或数据截图、对应作品的正片截图或视频，以及字幕或逐字稿。AI 按拿到的素材继续分析，注明缺失项。见 [素材包模式](references/portability.md#素材包模式)。
 
 ## 常用命令
 
